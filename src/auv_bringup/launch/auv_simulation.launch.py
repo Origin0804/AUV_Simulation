@@ -78,7 +78,6 @@ def generate_launch_description():
             output='screen',
             parameters=[{
                 'publish_rate': 10.0,
-                'noise_std': 0.01,
             }]
         ),
         Node(

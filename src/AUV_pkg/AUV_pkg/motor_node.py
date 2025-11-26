@@ -27,26 +27,27 @@ class MotorNode(Node):
         # Get parameters
         self.max_thrust = self.get_parameter(
             'max_thrust').get_parameter_value().double_value
-        self.motor_distance = self.get_parameter(
+        motor_distance = self.get_parameter(
             'motor_distance').get_parameter_value().double_value
 
         # Motor configuration (typical AUV 6-thruster config)
         # Motors 1-4: Horizontal thrusters (for X, Y motion and yaw)
         # Motors 5-6: Vertical thrusters (for Z motion and pitch/roll)
-        # Motor positions relative to center (normalized direction vectors)
+        # Motor positions relative to center, scaled by motor_distance
+        d = motor_distance  # Scale factor for motor positions
         self.motor_config = [
             # Motor 1: Front-left horizontal, angled 45 degrees
-            {'pos': [0.15, 0.1, 0.0], 'dir': [0.707, 0.707, 0.0]},
+            {'pos': [0.75 * d, 0.5 * d, 0.0], 'dir': [0.707, 0.707, 0.0]},
             # Motor 2: Front-right horizontal, angled 45 degrees
-            {'pos': [0.15, -0.1, 0.0], 'dir': [0.707, -0.707, 0.0]},
+            {'pos': [0.75 * d, -0.5 * d, 0.0], 'dir': [0.707, -0.707, 0.0]},
             # Motor 3: Rear-left horizontal, angled 45 degrees
-            {'pos': [-0.15, 0.1, 0.0], 'dir': [0.707, -0.707, 0.0]},
+            {'pos': [-0.75 * d, 0.5 * d, 0.0], 'dir': [0.707, -0.707, 0.0]},
             # Motor 4: Rear-right horizontal, angled 45 degrees
-            {'pos': [-0.15, -0.1, 0.0], 'dir': [0.707, 0.707, 0.0]},
+            {'pos': [-0.75 * d, -0.5 * d, 0.0], 'dir': [0.707, 0.707, 0.0]},
             # Motor 5: Front vertical
-            {'pos': [0.1, 0.0, 0.0], 'dir': [0.0, 0.0, 1.0]},
+            {'pos': [0.5 * d, 0.0, 0.0], 'dir': [0.0, 0.0, 1.0]},
             # Motor 6: Rear vertical
-            {'pos': [-0.1, 0.0, 0.0], 'dir': [0.0, 0.0, 1.0]},
+            {'pos': [-0.5 * d, 0.0, 0.0], 'dir': [0.0, 0.0, 1.0]},
         ]
 
         # Subscriber

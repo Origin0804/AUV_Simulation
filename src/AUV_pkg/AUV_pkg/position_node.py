@@ -63,7 +63,6 @@ class PositionNode(Node):
 
         # Time step
         self.dt = 1.0 / update_rate
-        self.last_time = self.get_clock().now()
 
         # Subscribers
         self.total_force_sub = self.create_subscription(

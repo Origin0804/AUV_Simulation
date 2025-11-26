@@ -21,7 +21,6 @@ class DVLNode(Node):
 
         # Declare parameters
         self.declare_parameter('publish_rate', 10.0)  # Hz
-        self.declare_parameter('noise_std', 0.01)     # Velocity noise std dev
 
         publish_rate = self.get_parameter(
             'publish_rate').get_parameter_value().double_value

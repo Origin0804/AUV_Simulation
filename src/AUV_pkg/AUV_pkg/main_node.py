@@ -100,26 +100,32 @@ class MainNode(Node):
         motors_msg = MotorsData()
         motors_msg.header.stamp = self.get_clock().now().to_msg()
 
+        # Initialize all motor PWM values to 0
+        motors_msg.motor1_pwm = 0.0
+        motors_msg.motor2_pwm = 0.0
+        motors_msg.motor3_pwm = 0.0
+        motors_msg.motor4_pwm = 0.0
+        motors_msg.motor5_pwm = 0.0
+        motors_msg.motor6_pwm = 0.0
+
         # =====================================================
         # USER PROGRAMMING AREA - Modify the logic below
         # =====================================================
 
-        # Example: Simple depth control
+        # Example: Simple pitch stabilization control
         # This is a basic example - replace with your control logic
-        target_depth = -2.0  # Target depth in meters (negative is below surface)
 
         if self.imu_data is not None:
-            # Simple proportional control for depth
+            # Simple proportional control for pitch stabilization
             # In reality, you would use PID or more advanced control
             current_pitch = self.imu_data.pitch
 
             # Vertical motors control (motors 5 and 6)
-            # Adjust based on pitch to maintain level
-            base_thrust = 0.0  # Neutral buoyancy assumed
+            # Adjust based on pitch to maintain level attitude
             pitch_correction = -current_pitch * 10.0
 
-            motors_msg.motor5_pwm = base_thrust + pitch_correction
-            motors_msg.motor6_pwm = base_thrust - pitch_correction
+            motors_msg.motor5_pwm = pitch_correction
+            motors_msg.motor6_pwm = -pitch_correction
 
         if self.cv_data is not None and self.cv_data.target_detected:
             # Example: Simple target tracking
